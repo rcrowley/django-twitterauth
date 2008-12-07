@@ -1,0 +1,64 @@
+NAME
+	Django Twitter Auth -- a safe way for 3rd parties to auth with Twitter
+
+SYNOPSIS
+
+DESCRIPTION
+	Until Twitter supports OAuth, this is the best way I can think of to
+	verify a Twitter user's credentials without asking for their password.
+
+	It works by first having the app's Twitter user follow the
+	authenticating user and then sending the authenticating user to a
+	URL that will direct message the app's user a known and random
+	hash.  The process has some UI flaws because of XSS protections that
+	browsers put in place.
+
+	The process:
+		1.	Ask the authenticating user for their Twitter username.
+		2.	Present the authenticating user with an <iframe> containing
+			a form that will send a direct message from them to the
+			app's user.  When clicked, the browser's HTTP Authentication
+			dialog will appear to get the authenticating user's Twitter
+			credentials.
+		3.	The <iframe> has now navigated to an ugly JSON dump page.
+			The app should encourage the user to disregard that and click
+			the "Continue" link when they see it.
+
+INSTALLATION
+	Checkout/download and place in the root of your Django project.
+	You'll need to add this app to your settings.py file.
+
+	Setup the URLs for the auth app.  For example, add these to your
+	urls.py:
+
+		url(r'^info/?$', 'auth.views.info', name='auth_info'),
+    	url(r'^login/?$', 'auth.views.login', name='auth_login'),
+    	url(r'^login/dm/?$', 'auth.views.dm', name='auth_dm'),
+    	url(r'^logout/?$', 'auth.views.logout', name='auth_logout'),
+
+	It is important to use named URLs.  I chose not to create auth/urls.py
+	because /auth/login et cetera seems awful.
+
+	Make sure to run `python manage.py syncdb` to create the User model.
+
+DEPENDENCIES
+	Python 2.5 <http://python.org/>
+	Django 1.0.2 <http://djangoproject.com/>
+	Simple JSON <http://pypi.python.org/pypi/simplejson>
+	Python Twitter 0.5 <http://code.google.com/p/python-twitter/>
+
+VERSION
+	0.1
+
+DATE
+	2008-12-07
+
+AUTHOR
+	Richard Crowley <r@rcrowley.org>
+
+SEE ALSO
+
+LICENSE
+	This work is licensed under a Creative Commons
+	Attribution-Share Alike 3.0 Unported License
+	<http://creativecommons.org/licenses/by-sa/3.0/>

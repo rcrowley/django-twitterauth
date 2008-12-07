@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block content %}
+<form action="{% url auth_login %}" method="post">
+{% if dm_error %}
+	<p class="error">We didn't get a direct message from you verifying your
+	credentials.&nbsp; Give it another go, please.</p>
+{% endif %}
+{% if database_error %}
+	<p class="error">Something went majorly wrong with our database.&nbsp;
+	Things should be cleared up shortly.</p>
+{% endif %}
+{% if follow_error %}
+	<p class="error">We had a problem following you.&nbsp; Check your
+	username and try again.</p>
+{% endif %}
+{% if username_error %}
+	<p class="error">Usernames are made up of between 1 and 40
+	letters, numbers or underscores.</p>
+{% endif %}
+<p><label for="username">Twitter username:</label>
+<input id="username" name="username" type="text" value="{{ username }}" class="text" />
+<input type="submit" value="Login" class="button" /></p>
+<p><em><big>Where do I put in my password?</big></em>&nbsp; You&rsquo;ll
+enter your password in your browser's authentication dialog on the next
+screen.&nbsp; This guarantees that we can never store your password and
+still allows us to verify that you own this Twitter account.&nbsp;
+<a href="#">How?</a></p>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block content %}
+<p>We&rsquo;ve told @{{ to }} to follow you and now need to finish
+authenticating.&nbsp; First, click the button below to and enter your
+Twitter credentials.&nbsp; This will send a direct message containing
+the text &ldquo;{{ dm }}&rdquo; to us, verifying that you own
+@{{ username }}.</p>
+<p><iframe id="dm" scrolling="no" src="{% url auth.views.dm %}"></iframe></p>
+<p><em>Don&rsquo;t worry about the text that shows up in the button after
+clicking it.</em></p>
+<p>After you've done that, continue below.</p>
+<p><a href="{% url auth.views.login %}"><big>Continue</big></a></p>
+{% endblock %}

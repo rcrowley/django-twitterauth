@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>{% block title %}Info for {{ user.username }}{% endblock %}</h1>
+<form action="{% url auth_info %}" method="post">
+{% for error in errors %}
+	{% ifequal 'email' error %}
+		<p class="error">That doesn&rsquo;t look like a valid email address.</p>
+	{% endifequal %}
+{% endfor %}
+<p>Twitter username: <strong>{{ user.username }}</strong></p>
+<p><label for="email">Email address:</label>
+<input id="email" name="email" type="text" value="{{ user.email }}" class="text" /></p>
+<p><input type="submit" value="Save" class="button" /></p>
+{% endblock %}
