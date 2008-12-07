@@ -116,4 +116,4 @@ def logout(req):
 		user.save()
 	except: pass
 	req.session.flush()
-	return render_to_response('logout.html', {})
+	return HttpResponseRedirect('/')
