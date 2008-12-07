@@ -32,9 +32,9 @@ INSTALLATION
 	urls.py:
 
 		url(r'^info/?$', 'auth.views.info', name='auth_info'),
-    	url(r'^login/?$', 'auth.views.login', name='auth_login'),
-    	url(r'^login/dm/?$', 'auth.views.dm', name='auth_dm'),
-    	url(r'^logout/?$', 'auth.views.logout', name='auth_logout'),
+		url(r'^login/?$', 'auth.views.login', name='auth_login'),
+		url(r'^login/dm/?$', 'auth.views.dm', name='auth_dm'),
+		url(r'^logout/?$', 'auth.views.logout', name='auth_logout'),
 
 	It is important to use named URLs.  I chose not to create auth/urls.py
 	because /auth/login et cetera seems awful.
