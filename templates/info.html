@@ -8,7 +8,7 @@
 	{% endifequal %}
 {% endfor %}
 <p>Twitter username: <strong>{{ user.username }}</strong></p>
-<p><label for="email">Email address:</label>
+<p><label for="email">Email address:</label>&nbsp;
 <input id="email" name="email" type="text" value="{{ user.email }}" class="text" /></p>
 <p><input type="submit" value="Save" class="button" /></p>
 {% endblock %}
