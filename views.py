@@ -38,7 +38,6 @@ def login(req):
 			username=settings.TWITTERAUTH_USERNAME,
 			password=settings.TWITTERAUTH_PASSWORD
 		)
-		api.SetCache(None)
 		try: dms = api.GetDirectMessages(user.dm_time)
 		except: dms = ()
 		for dm in dms:
@@ -72,7 +71,6 @@ def login(req):
 				username=settings.TWITTERAUTH_USERNAME,
 				password=settings.TWITTERAUTH_PASSWORD
 			)
-			api.SetCache(None)
 			try: api.CreateFriendship(user.username)
 			except: pass
 			#	return render_to_response('login.html', {
