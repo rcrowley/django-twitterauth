@@ -20,24 +20,28 @@ DESCRIPTION
 			app's user.  When clicked, the browser's HTTP Authentication
 			dialog will appear to get the authenticating user's Twitter
 			credentials.
-		3.	The <iframe> has now navigated to an ugly JSON dump page.
-			The app should encourage the user to disregard that and click
-			the "Continue" link when they see it.
+		3.	After a short delay to make sure the <iframe>'s request went
+			through, the page is refreshed via JavaScript and the direct
+			message is verified.
 
 INSTALLATION
-	Checkout/download and place in the root of your Django project.
-	You'll need to add this app to your settings.py file.
+	Clone/download and place in the root of your Django project.  You'll
+	need to add this app to your settings.py file in the INSTALLED_APPS
+	section.  You'll also need these two extra lines:
 
-	Setup the URLs for the auth app.  For example, add these to your
-	urls.py:
+		TWITTERAUTH_USERNAME = 'OH HAI'
+		TWITTERAUTH_PASSWORD = 'OH NOES'
+
+	Setup the URLs for the auth app.  The names of the URLs are required.
+	For example:
 
 		url(r'^info/?$', 'auth.views.info', name='auth_info'),
 		url(r'^login/?$', 'auth.views.login', name='auth_login'),
 		url(r'^login/dm/?$', 'auth.views.dm', name='auth_dm'),
 		url(r'^logout/?$', 'auth.views.logout', name='auth_logout'),
 
-	It is important to use named URLs.  I chose not to create auth/urls.py
-	because /auth/login et cetera seems awful.
+	Again, the names of the URLs are required.  I chose not to create
+	auth/urls.py because URLs like /auth/login et cetera seems awful.
 
 	Make sure to run `python manage.py syncdb` to create the User model.
 
@@ -46,9 +50,10 @@ DEPENDENCIES
 	Django 1.0.2 <http://djangoproject.com/>
 	Simple JSON <http://pypi.python.org/pypi/simplejson>
 	Python Twitter 0.5 <http://code.google.com/p/python-twitter/>
+	jQuery 1.3.1 <http://jquery.com/>
 
 VERSION
-	0.1
+	0.2
 
 DATE
 	2008-12-07
