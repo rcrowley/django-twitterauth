@@ -6,9 +6,23 @@ authenticating.&nbsp; First, click the button below to and enter your
 Twitter credentials.&nbsp; This will send a direct message containing
 the text &ldquo;{{ dm }}&rdquo; to us, verifying that you own
 @{{ username }}.</p>
-<p><iframe id="dm" scrolling="no" src="{% url auth.views.dm %}"></iframe></p>
-<p><em>Don&rsquo;t worry about the text that shows up in the button after
-clicking it.</em></p>
-<p>After you've done that, continue below.</p>
-<p><a href="{% url auth.views.login %}"><big>Continue</big></a></p>
+<p><input id="dm" type="button" value="Login through Twitter"
+class="big button" />&nbsp;
+<a href="{% url auth_login %}" style="display: none;"
+><big>Continue</big></a></p>
+<iframe id="dm-iframe" src="{% url auth_dm %}" style="display: none;"></iframe>
+{% endblock %}
+{% block extrajs %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#dm').click(function() {
+		$('#dm-iframe').contents().find('form').each(function() {
+			this.submit();
+		});
+		setTimeout(function() {
+			window.location.href = '{% url auth_login %}';
+		}, 500);
+	});
+});
+</script>
 {% endblock %}
