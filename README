@@ -20,9 +20,9 @@ DESCRIPTION
 			app's user.  When clicked, the browser's HTTP Authentication
 			dialog will appear to get the authenticating user's Twitter
 			credentials.
-		3.	After a short delay to make sure the <iframe>'s request went
-			through, the page is refreshed via JavaScript and the direct
-			message is verified.
+		3.	After the user has logged in, ask them to click a link to
+			refresh the page, at which point the direct message is
+			verified.
 
 INSTALLATION
 	Clone/download and place in the root of your Django project.  You'll

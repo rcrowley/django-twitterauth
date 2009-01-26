@@ -7,9 +7,9 @@ Twitter credentials.&nbsp; This will send a direct message containing
 the text &ldquo;{{ dm }}&rdquo; to us, verifying that you own
 @{{ username }}.</p>
 <p><input id="dm" type="button" value="Login through Twitter"
-class="big button" />&nbsp;
-<a href="{% url auth_login %}" style="display: none;"
-><big>Continue</big></a></p>
+class="big button" />&nbsp;&nbsp;&nbsp;
+<big style="display: none;">I&rsquo;m logged in,
+<a href="{% url auth_login %}">Continue</a></big></p>
 <iframe id="dm-iframe" src="{% url auth_dm %}" style="display: none;"></iframe>
 {% endblock %}
 {% block extrajs %}
@@ -20,7 +20,7 @@ $(document).ready(function() {
 			this.submit();
 		});
 		setTimeout(function() {
-			window.location.href = '{% url auth_login %}';
+			$('#dm').parent().find('big').css({'display': ''});
 		}, 500);
 	});
 });
