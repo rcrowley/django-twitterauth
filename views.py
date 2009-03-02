@@ -36,7 +36,6 @@ def login(req):
 		)
 		try: dms = api.GetDirectMessages(user.dm_time)
 		except: dms = ()
-		print str(len(dms))
 		for dm in dms:
 			if dm.sender_screen_name == user.username and dm.text == user.dm:
 				req.session['authed'] = True
@@ -82,7 +81,6 @@ def login(req):
 			# Build up the bits we need to have them DM us
 			req.session['user_id'] = user.id
 			req.session['authed'] = False
-			print 'set user_id: %d, authed: False' % user.id
 			dm = sha1(settings.SECRET_KEY + req.POST['username'] +
 				str(random.randint(0, sys.maxint))).hexdigest()
 			user.dm = dm
