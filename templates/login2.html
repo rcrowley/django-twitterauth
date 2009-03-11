@@ -11,17 +11,23 @@ the text &ldquo;{{ dm }}&rdquo; to us, verifying that you own
 class="big button" />&nbsp;&nbsp;&nbsp;
 <big style="display: none;">I&rsquo;m logged in,
 <a href="{% url auth_login %}">Continue</a></big></p>
-<iframe id="dm-iframe" src="{% url auth_dm %}" style="display: none;"></iframe>
+<iframe id="dm-iframe-1" src="{% url auth_dm %}" style="display: none;"></iframe>
+<iframe id="dm-iframe-2" src="{% url auth_dm %}" style="display: none;"></iframe>
 {% endblock %}
 {% block extrajs %}
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#dm').click(function() {
-		$('#dm-iframe').contents().find('form').each(function() {
+		$('#dm-iframe-1').contents().find('form').each(function() {
 			this.submit();
 		});
 		setTimeout(function() {
-			$('#dm').parent().find('big').css({'display': ''});
+			$('#dm-iframe-2').contents().find('form').each(function() {
+				this.submit();
+			});
+			setTimeout(function() {
+				$('#dm').parent().find('big').css({'display': ''});
+			}, 500);
 		}, 500);
 	});
 });
