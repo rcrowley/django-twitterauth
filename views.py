@@ -98,7 +98,7 @@ def login(req):
 			'username_error': True
 		})
 
-# This cannot use the @wants_user decorator because it is sent before
+# This cannot use the @needs_user decorator because it is sent before
 # req.session['authed'] is true
 def dm(req):
 	try:
@@ -116,4 +116,4 @@ def logout(req):
 		req.user.dm_time = ''
 		req.user.save()
 	req.session.flush()
-	return HttpResponseRedirect('/')
+	return render_to_response('logout.html', {})
