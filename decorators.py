@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from twiver.auth.models import User
+from models import User
 
 def wants_user(f):
 	def new(*args, **kw):
