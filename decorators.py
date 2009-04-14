@@ -4,12 +4,8 @@ from models import User
 
 def wants_user(f):
 	def new(*args, **kw):
-		if 'authed' in args[0].session and args[0].session['authed']:
-			try: user = User.objects.get(pk=args[0].session['user_id'])
-			except: user = None
-			args[0].user = user
-		else:
-			args[0].user = None
+		try: args[0].user = User.objects.get(pk=args[0].session['user_id'])
+		except: args[0].user = None
 		return f(*args, **kw)
 	return new
 

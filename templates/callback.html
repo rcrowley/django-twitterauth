@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>{% block title %}Login Error{% endblock %}</h1>
+{% if token %}
+	<p>There&rsquo;s no token stored in your cookie.&nbsp; <a
+	href="{% url auth_login %}">Try authenticating again</a>.</p>
+{% else %}
+	{% if mismatch %}
+		<p>The token in your cookie and the one returned from Twitter
+		do not match, which is very fishy.&nbsp; Please <a
+		href="{% url auth_login %}">try authenticating again</a>.</p>
+	{% else %}
+		{% if username %}
+			<p>Twitter didn&rsquo;t return your username, which probably
+			means you weren&rsquo;t authenticated successfully.&nbsp;
+			<a href="{% url auth_login %}">Try authenticating again</a>.</p>
+		{% else %}
+			<p>Something majorly fishy is going on.&nbsp; Will you please
+			<a href="{% url auth_login %}">try authenticating again</a>.</p>
+		{% endif %}
+	{% endif %}
+{% endif %}
+{% endblock %}

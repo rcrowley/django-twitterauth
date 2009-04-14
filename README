@@ -1,47 +1,39 @@
-OBSOLETE
-	This package is obsolete and you'd do well to avoid it in favor of
-	<http://github.com/henriklied/django-twitter-oauth>
-
 NAME
-	Django Twitter Auth -- a safe way for 3rd parties to auth with Twitter
+	Django Twitter Auth -- use Twitter for authentication in Django
 
 SYNOPSIS
 
 DESCRIPTION
-	Until Twitter supports OAuth, this is the best way I can think of to
-	verify a Twitter user's credentials without asking for their password.
+	Twitter now supports OAuth, so django-twitterauth has been rewritten
+	to support this better authentication flow.  It is well documented
+	elsewhere so I will not be going into detail here.
 
-	It works by first having the app's Twitter user follow the
-	authenticating user and then sending the authenticating user to a
-	URL that will direct message the app's user a known and random
-	hash.  The process has some UI flaws because of XSS protections that
-	browsers put in place.
+	The app supplies views to handle the login flow, a user info page
+	and a *basic* User model.
 
-	The process:
-		1.	Ask the authenticating user for their Twitter username.
-		2.	Present the authenticating user with an <iframe> containing
-			a form that will send a direct message from them to the
-			app's user.  When clicked, the browser's HTTP Authentication
-			dialog will appear to get the authenticating user's Twitter
-			credentials.
-		3.	After the user has logged in, ask them to click a link to
-			refresh the page, at which point the direct message is
-			verified.
+	Mad props to Henrik Lied for the initial Django implementation of
+	Twitter OAuth.  I used his utils.py file almost verbatim in creating
+	this app.
 
 INSTALLATION
-	Clone/download and place in the root of your Django project.  You'll
-	need to add this app to your settings.py file in the INSTALLED_APPS
-	section.  You'll also need these two extra lines:
+	Clone/download and place in the root of your Django project:
 
-		TWITTERAUTH_USERNAME = 'OH HAI'
-		TWITTERAUTH_PASSWORD = 'OH NOES'
+		$ cd $YOUR_DJANGO_PROJECT
+		$ git clone git://github.com/rcrowley/django-twitterauth.git auth
+		$ echo auth >> .gitignore
+
+	You'll need to add this app to your settings.py file in the
+	INSTALLED_APPS section.  You'll also need these two extra lines:
+
+		TWITTERAUTH_KEY = 'OH HAI'
+		TWITTERAUTH_SECRET = 'OH NOES'
 
 	Setup the URLs for the auth app.  The names of the URLs are required.
 	For example:
 
 		url(r'^info/?$', 'auth.views.info', name='auth_info'),
 		url(r'^login/?$', 'auth.views.login', name='auth_login'),
-		url(r'^login/dm/?$', 'auth.views.dm', name='auth_dm'),
+		url(r'^login/callback/?$', 'auth.views.callback', name='auth_callback'),
 		url(r'^logout/?$', 'auth.views.logout', name='auth_logout'),
 
 	Again, the names of the URLs are required.  I chose not to create
@@ -53,14 +45,13 @@ DEPENDENCIES
 	Python 2.5 <http://python.org/>
 	Django 1.0.2 <http://djangoproject.com/>
 	Simple JSON <http://pypi.python.org/pypi/simplejson>
-	Python Twitter 0.5 <http://code.google.com/p/python-twitter/>
-	jQuery 1.3.1 <http://jquery.com/>
+	Python OAuth <http://oauth.googlecode.com/svn/code/python/oauth/>
 
 VERSION
-	0.2
+	0.3
 
 DATE
-	2008-12-07
+	2009-04-13
 
 AUTHOR
 	Richard Crowley <r@rcrowley.org>
