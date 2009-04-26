@@ -45,12 +45,13 @@ def callback(req):
 		CONNECTION, token)
 
 	# Actually login
-	if 'screen_name' not in req.GET:
+	obj = is_authenticated(CONSUMER, CONNECTION, token)
+	if obj is False:
 		return render_to_response('callback.html', {
 			'username': True
 		})
-	try: user = User.objects.get(username=req.GET['screen_name'])
-	except: user = User(username=req.GET['screen_name'])
+	try: user = User.objects.get(username=obj['screen_name'])
+	except: user = User(username=obj['screen_name'])
 	user.oauth_token = token.key
 	user.oauth_token_secret = token.secret
 	user.save()

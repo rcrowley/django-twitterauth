@@ -3,6 +3,7 @@
 
 from oauth import oauth
 from django.conf import settings
+from django.utils import simplejson as json
 
 signature_method = oauth.OAuthSignatureMethod_HMAC_SHA1()
 
@@ -75,6 +76,9 @@ def exchange_request_token_for_access_token(
  
 def is_authenticated(consumer, connection, access_token):
 	req = request_oauth_resource(consumer, TWITTER_CHECK_AUTH, access_token)
-	json = fetch_response(req, connection)
-	if 'screen_name' in json: return json
+	raw = fetch_response(req, connection)
+	try:
+		obj = json.decode(raw)
+		if 'screen_name' in obj: return obj
+	except: pass
 	return False
