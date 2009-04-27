@@ -17,3 +17,8 @@ class User(models.Model):
 			self.email):
 			errors += ['email']
 		return errors
+
+	# django.core.context_processors.auth assumes that an object attached
+	# to request.user is always a django.contrib.auth.models.User, which
+	# is completely broken but easy to work around
+	def get_and_delete_messages(self): pass
