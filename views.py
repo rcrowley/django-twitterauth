@@ -6,8 +6,6 @@ from utils import *
 from models import User
 from decorators import wants_user, needs_user
 
-CONSUMER, CONNECTION = consumer_connection()
-
 @needs_user('auth_login')
 def info(req):
 	if 'POST' == req.method:
@@ -23,9 +21,9 @@ def info(req):
 @wants_user
 def login(req):
 	if req.user: return HttpResponseRedirect('auth_info')
-	token = get_unauthorised_request_token(CONSUMER, CONNECTION)
+	token = get_unauthorized_token()
 	req.session['token'] = token.to_string()
-	return HttpResponseRedirect(get_authorisation_url(CONSUMER, token))
+	return HttpResponseRedirect(get_authorization_url(token))
 
 def callback(req):
 	token = req.session.get('token', None)
@@ -38,12 +36,11 @@ def callback(req):
 		return render_to_response('callback.html', {
 			'mismatch': True
 		})
-	token = exchange_request_token_for_access_token(CONSUMER,
-		CONNECTION, token)
+	token = get_authorized_token(token)
 
 	# Actually login
-	obj = is_authenticated(CONSUMER, CONNECTION, token)
-	if obj is False:
+	obj = is_authorized(token)
+	if obj is None:
 		return render_to_response('callback.html', {
 			'username': True
 		})
