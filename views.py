@@ -1,15 +1,12 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from oauth import oauth
-import httplib, simplejson, time, datetime
 from utils import *
 from models import User
 from decorators import wants_user, needs_user
 
-CONSUMER = oauth.OAuthConsumer(TWITTERAUTH_KEY, TWITTERAUTH_SECRET)
-CONNECTION = httplib.HTTPSConnection(SERVER)
+CONSUMER, CONNECTION = consumer_connection()
 
 @needs_user('auth_login')
 def info(req):
